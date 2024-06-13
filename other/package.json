@@ -1,0 +1,227 @@
+{
+    "name": "friendly-snippets",
+    "engines": {
+        "vscode": "^1.11.0"
+    },
+    "contributes": {
+        "snippets": [
+            {
+                "language": [
+                    "plaintext",
+                    "markdown",
+                    "tex",
+                    "html",
+                    "global",
+                    "all"
+                ],
+                "path": "./snippets/global.json"
+            },
+            {
+                "language": "c",
+                "path": "./snippets/c/c.json"
+            },
+            {
+                "language": "cdoc",
+                "path": "./snippets/c/cdoc.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/cpp/cpp.json"
+            },
+            {
+                "language": "lua",
+                "path": "./snippets/lua/lua.json"
+            },
+            {
+                "language": "luadoc",
+                "path": "./snippets/lua/luadoc.json"
+            },
+            {
+                "language": "go",
+                "path": "./snippets/go.json"
+            },
+            {
+                "language": "php",
+                "path": "./snippets/php/php.json"
+            },
+            {
+                "language": "phpdoc",
+                "path": "./snippets/php/phpdoc.json"
+            },
+            {
+                "language": "rust",
+                "path": "./snippets/rust/rust.json"
+            },
+            {
+                "language": "rustdoc",
+                "path": "./snippets/rust/rustdoc.json"
+            },
+            {
+                "language": "rust",
+                "path": "./snippets/frameworks/relm4/workers.json"
+            },
+            {
+                "language": "rust",
+                "path": "./snippets/frameworks/relm4/factories.json"
+            },
+            {
+                "language": "rust",
+                "path": "./snippets/frameworks/relm4/templates.json"
+            },
+            {
+                "language": "rust",
+                "path": "./snippets/frameworks/relm4/components.json"
+            },
+            {
+                "language": "sql",
+                "path": "./snippets/sql.json"
+            },
+            {
+                "language": "systemverilog",
+                "path": "./snippets/systemverilog.json"
+            },
+            {
+                "language": ["shellscript", "shell", "sh", "zsh"],
+                "path": "./snippets/shell/shell.json"
+            },
+            {
+                "language": "shelldoc",
+                "path": "./snippets/shell/shelldoc.json"
+            },
+            {
+                "language": ["markdown", "rmd"],
+                "path": "./snippets/markdown.json"
+            },
+            {
+                "language": "java",
+                "path": "./snippets/java/java.json"
+            },
+            {
+                "language": "java-testing",
+                "path": "./snippets/java/java-tests.json"
+            },
+            {
+                "language": "julia",
+                "path": "./snippets/julia.json"
+            },
+            {
+                "language": [
+                    "html",
+                    "jade",
+                    "pug",
+                    "eruby",
+                    "javascriptreact",
+                    "htmldjango",
+                    "astro",
+		    "blade"
+                ],
+                "path": "./snippets/html.json"
+            },
+            {
+                "language": ["css", "scss", "sass", "less", "stylus"],
+                "path": "./snippets/css.json"
+            },
+            {
+                "language": ["javascript", "javascriptreact", "vue", "svelte"],
+                "path": "./snippets/javascript/javascript.json"
+            },
+            {
+                "language": ["typescript", "typescriptreact"],
+                "path": "./snippets/javascript/typescript.json"
+            },
+            {
+                "language": "javascriptreact",
+                "path": "./snippets/javascript/react.json"
+            },
+            {
+                "language": "javascriptreact",
+                "path": "./snippets/javascript/react-native.json"
+            },
+            {
+                "language": "javascriptreact",
+                "path": "./snippets/javascript/next.json"
+            },
+            {
+                "language": "typescriptreact",
+                "path": "./snippets/javascript/react-ts.json"
+            },
+            {
+                "language": "typescriptreact",
+                "path": "./snippets/javascript/next-ts.json"
+            },
+            {
+                "language": "typescriptreact",
+                "path": "./snippets/javascript/react-native-ts.json"
+            },
+            {
+                "language": ["javascriptreact", "typescriptreact"],
+                "path": "./snippets/javascript/react-es7.json"
+            },
+            {
+                "language": "vue",
+                "path": "./snippets/frameworks/vue/html.json"
+            },
+            {
+                "language": "vue",
+                "path": "./snippets/frameworks/vue/nuxt-html.json"
+            },
+            {
+                "language": "vue",
+                "path": "./snippets/frameworks/vue/nuxt-script.json"
+            },
+            {
+                "language": "vue",
+                "path": "./snippets/frameworks/vue/script.json"
+            },
+            {
+                "language": "vue",
+                "path": "./snippets/frameworks/vue/vue.json"
+            },
+            {
+                "language": "vue",
+                "path": "./snippets/frameworks/vue/style.json"
+            },
+            {
+                "language": "python",
+                "path": "./snippets/python/base.json"
+            },
+            {
+                "language": "python",
+                "path": "./snippets/python/comprehension.json"
+            },
+            {
+                "language": "python",
+                "path": "./snippets/python/debug.json"
+            },
+            {
+                "language": "python",
+                "path": "./snippets/python/python.json"
+            },
+            {
+                "language": "python",
+                "path": "./snippets/python/unittest.json"
+            },
+            {
+                "language": "yaml",
+                "path": "./snippets/kubernetes.json"
+            },
+            {
+                "language": "yaml",
+                "path": "./snippets/docker/docker-compose.json"
+            },
+            {
+                "language": "make",
+                "path": "./snippets/make.json"
+            },
+            {
+                "language": "dockerfile",
+                "path": "./snippets/docker/docker_file.json"
+            },
+            {
+                "language": ["powershell", "ps1"],
+                "path": "./snippets/PowerShell.json"
+            }
+        ]
+    }
+}
+
