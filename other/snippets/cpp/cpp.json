@@ -379,6 +379,19 @@
         ],
         "description": "A standard main function for a C++ program"
     },
+    "work Main function template": {
+        "prefix": "mainw",
+        "body": [
+            "#include <iostream>",
+            "using namespace std;",
+            "$0",
+            "int main(){",
+            "\t$1",
+            "\treturn 0;",
+            "}"
+        ],
+        "description": "A standard main function for a C++ program"
+    },
     "#guard": {
         "prefix": "#guard",
         "body": [
