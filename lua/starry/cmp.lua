@@ -9,7 +9,7 @@ if not snip_status_ok then
 end
 
 -- require("luasnip/loaders/from_vscode").lazy_load()
-require("luasnip/loaders/from_vscode").load({ paths = { "../../other/" } })
+require("luasnip/loaders/from_vscode").load({ paths = { "~/.config/nvim/other/" } })
 
 local check_backspace = function()
     local col = vim.fn.col "." - 1
