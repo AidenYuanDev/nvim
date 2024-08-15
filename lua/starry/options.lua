@@ -18,17 +18,19 @@ opt.splitbelow = true		            	-- 水平拆分
 opt.mouse = "a"                             -- 允许使用鼠标
 -- opt.transparent = true                       -- 背景透明
 
+
+--
 -- 剪切板  会使打开速度变慢
-opt.clipboard = {
-    name = 'win32yank-wsl',
-    copy = {
-        ['+'] =  'win32yank.exe -i --crlf',
-        ['*'] =  'win32yank.exe -i --crlf',
-    },
-    paste = {
-        ['+'] = 'win32yank.exe -o --lf',
-        ['*'] = 'win32yank.exe -o --lf',
-    },
-    cache_enabled = true,
-}
+-- opt.clipboard = {
+--     name = 'win32yank-wsl',
+--     copy = {
+--         ['+'] =  'win32yank.exe -i --crlf',
+--         ['*'] =  'win32yank.exe -i --crlf',
+--     },
+--     paste = {
+--         ['+'] = 'win32yank.exe -o --lf',
+--         ['*'] = 'win32yank.exe -o --lf',
+--     },
+--     cache_enabled = true,
+-- }
 opt.clipboard:append("unnamedplus")   	-- 使用系统默认剪贴板
