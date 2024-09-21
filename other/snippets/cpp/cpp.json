@@ -364,7 +364,7 @@
             "",
             "$0",
             "",
-            "void slove() {",
+            "void solve() {",
             "",
             "}",
             "",
@@ -373,7 +373,7 @@
             "\tcin.tie(0), cout.tie(0);",
             "\tint t = 1;",
             "\t/*cin >> t;*/",
-            "\twhile(t--) slove();",
+            "\twhile(t--) solve();",
             "\treturn 0;",
             "}"
         ],
