@@ -10,19 +10,19 @@
 
 安装 neovim
 
-~~~
+```
 #  找到非标准源
 sudo add-apt-repository ppa:neovim-ppa/unstable
 # 更新
 sudo apt update
 # 安装
 sudo apt install neovim
-~~~
+```
 
 安装所需依赖
 
-~~~
-# nodejs 
+```
+# nodejs
 curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install nodejs
 # gcc clang unzip python
@@ -34,17 +34,17 @@ curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/down
 unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
 chmod +x /tmp/win32yank.exe
 sudo mv /tmp/win32yank.exe /usr/local/bin/
-sudo rm -rf /tmp/win32yank.zip 
-~~~
+sudo rm -rf /tmp/win32yank.zip
+```
 
 安装本项目
 
-~~~
+```
 mkdir ~/.config
 cd ~/.config
 git clone https://github.com/StarryDecade/Neovim-config.git
 mv Neovim-config nvim
 cd nvim
 # 这里会黑屏正常现象，在下载插件，多进入几次。
-nvim init.lua 
-~~~
+nvim init.lua
+```
