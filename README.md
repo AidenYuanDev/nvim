@@ -10,7 +10,7 @@
 
 安装 neovim
 
-```
+```bash
 #  找到非标准源
 sudo add-apt-repository ppa:neovim-ppa/unstable
 # 更新
@@ -21,7 +21,7 @@ sudo apt install neovim
 
 安装所需依赖
 
-```
+```bash
 # nodejs
 curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install nodejs
@@ -39,7 +39,7 @@ sudo rm -rf /tmp/win32yank.zip
 
 安装本项目
 
-```
+```bash
 mkdir ~/.config
 cd ~/.config
 git clone https://github.com/StarryDecade/Neovim-config.git
