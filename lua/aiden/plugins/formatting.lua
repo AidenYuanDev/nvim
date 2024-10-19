@@ -21,8 +21,14 @@ return {
 				liquid = { "prettier" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
-				cpp = { "clang-format" },
+				cpp = { "my_cpp_formatter" },
 				cmake = { "cmake_format" },
+			},
+			formatters = {
+				my_cpp_formatter = {
+					command = "clang-format",
+					args = '--style="{BasedOnStyle: Chromium}"',
+				},
 			},
 			-- format_on_save = {
 			-- 	lsp_fallback = true,

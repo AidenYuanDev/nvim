@@ -255,12 +255,12 @@
     "body": [
       "#include<bits/stdc++.h>",
       "using namespace std;",
-      "/*#define int long long*/",
+      "// #define int long long",
       "#define endl '\\n'",
       "#define P pair<int, int>",
       "#define x first",
       "#define y second",
-      "const int maxl = 1e6 + 7;",
+      "constexpr int maxl = 1e6 + 7;",
       "",
       "$0",
       "",
@@ -272,7 +272,7 @@
       "\tios::sync_with_stdio(0);",
       "\tcin.tie(0), cout.tie(0);",
       "\tint t = 1;",
-      "\t/*cin >> t;*/",
+      "\t// cin >> t;",
       "\twhile(t--) solve();",
       "\treturn 0;",
       "}"
