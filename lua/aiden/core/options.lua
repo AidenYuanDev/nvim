@@ -42,3 +42,6 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+-- QT
+opt.runtimepath:append("/opt/Qt/6.8.0/gcc_64/include")

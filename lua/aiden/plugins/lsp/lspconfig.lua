@@ -147,11 +147,22 @@ return {
 				})
 			end,
 			["clangd"] = function()
-				-- config cpp language server
+				-- 配置cpp语言服务器
 				lspconfig["clangd"].setup({
 					capabilities = capabilities,
 					filetypes = { "c", "cpp", "cc", "objc", "objcpp", "cuda", "proto" },
 					single_file_support = true,
+					cmd = {
+						"clangd",
+						"--background-index",
+						"--clang-tidy",
+						"--header-insertion=iwyu",
+						"--completion-style=detailed",
+						"--function-arg-placeholders",
+						"--fallback-style=Chromium",
+						"--query-driver=/usr/bin/clang++",
+						 "--query-driver=/usr/bin/g++,/opt/Qt/6.8.0/gcc_64/bin/g++",
+					},
 				})
 			end,
 			["cmake"] = function()
