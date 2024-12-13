@@ -51,7 +51,6 @@ return {
 				"eslint_d", -- js linter
 				"clang-format", -- cpp formatter
 				"cmakelang", -- cmake formatter
-				"buf", -- protobuf
 			},
 		})
 	end,

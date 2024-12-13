@@ -161,7 +161,7 @@ return {
 						"--function-arg-placeholders",
 						"--fallback-style=Chromium",
 						"--query-driver=/usr/bin/clang++",
-						 -- "--query-driver=/opt/Qt/6.8.0/gcc_64/bin/g++",
+						-- "--query-driver=/opt/Qt/6.8.0/gcc_64/bin/g++",
 					},
 				})
 			end,
