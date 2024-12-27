@@ -47,4 +47,14 @@ mv Neovim-config nvim
 cd nvim
 # 这里会黑屏正常现象，在下载插件，多进入几次。
 nvim init.lua
+
+# telescope 出错 
+If you're using the LazyVim plugin manager for Neovim, follow these steps:
+
+Open LazyVim by typing :Lazy.
+Use the up/down arrow keys to highlight telescope-fzf-native.nvim and press Enter.
+Then, press the keys g followed by b (i.e., gb) in succession to start compiling the libfzf.so library file that is missing. The task will appear briefly in the :Lazy window.
+Exit the LazyVim window with :q.
+Finally, reopen nvim.
+
 ```
