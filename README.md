@@ -57,4 +57,11 @@ Then, press the keys g followed by b (i.e., gb) in succession to start compiling
 Exit the LazyVim window with :q.
 Finally, reopen nvim.
 
+# wsl 下剪切板互通
+
+curl -sL $(curl -s https://api.github.com/repos/equalsraf/win32yank/releases/latest | grep "browser_download_url.*win32yank-x64.zip" | cut -d '"' -f 4) -o /tmp/win32yank.zip 
+unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
+chmod +x /tmp/win32yank.exe
+sudo mv /tmp/win32yank.exe /usr/local/bin/
+
 ```
