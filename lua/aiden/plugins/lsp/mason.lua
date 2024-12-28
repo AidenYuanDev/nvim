@@ -38,6 +38,7 @@ return {
 				"pyright",
 				"clangd",
 				"cmake",
+        "pbls"
 			},
 		})
 

@@ -70,6 +70,9 @@ return {
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 
+		-- protobuf
+		local util = require("lspconfig.util")
+
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
 		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -150,7 +153,7 @@ return {
 				-- 配置cpp语言服务器
 				lspconfig["clangd"].setup({
 					capabilities = capabilities,
-					filetypes = { "c", "cpp", "cc", "objc", "objcpp", "cuda", "proto" },
+					filetypes = { "c", "cpp", "cc", "objc", "objcpp", "cuda" },
 					single_file_support = true,
 					cmd = {
 						"clangd",
@@ -172,6 +175,30 @@ return {
 					filetypes = { "cmake" },
 					init_options = { buildDirectory = "build" },
 					single_file_support = true,
+				})
+			end,
+			["pbls"] = function()
+				-- config cmake language server
+				lspconfig["pbls"].setup({
+					default_config = {
+						cmd = { "pbls" },
+						filetypes = { "proto" },
+						root_dir = util.root_pattern(".pbls.toml", ".git"),
+					},
+					docs = {
+						description = [[
+https://git.sr.ht/~rrc/pbls
+
+Prerequisites: Ensure protoc is on your $PATH.
+
+`pbls` can be installed via `cargo install`:
+```sh
+cargo install --git https://git.sr.ht/~rrc/pbls
+```
+
+pbls is a Language Server for protobuf
+]],
+					},
 				})
 			end,
 		})
