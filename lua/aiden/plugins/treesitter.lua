@@ -42,10 +42,7 @@ return {
 				"query",
 				"vimdoc",
 				"c",
-<<<<<<< HEAD
-=======
         -- "cc",
->>>>>>> 6dc08758cfaf99b11d8c4d7f2b8731cb68b29e85
 				"cpp",
 				"cmake",
         "proto"
