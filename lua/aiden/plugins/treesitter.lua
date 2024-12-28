@@ -42,7 +42,6 @@ return {
 				"query",
 				"vimdoc",
 				"c",
-        "cc",
 				"cpp",
 				"cmake",
         "proto"
