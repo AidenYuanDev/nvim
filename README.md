@@ -25,8 +25,11 @@ sudo apt install neovim
 # nodejs
 curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install nodejs
-# gcc clang unzip python
-sudo apt install gcc clang unzip python3-venv
+# gcc clang unzip python protobuf
+sudo apt install gcc clang unzip python3-venv protobuf-compiler
+# cargo
+curl https://sh.rustup.rs -sSf | sh 
+source $HOME/.cargo/env
 
 # wsl下
 # 设置vim.opt.clipboard = "unnamedplus" wsl下 nvim启动变慢解决
