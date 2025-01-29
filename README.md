@@ -8,28 +8,13 @@
 
 ![image-20240417142308619](./RunChart.png)
 
-安装 neovim
-
-```bash
-#  找到非标准源
-sudo add-apt-repository ppa:neovim-ppa/unstable
-# 更新
-sudo apt update
-# 安装
-sudo apt install neovim
-```
-
 安装所需依赖
 
 ```bash
-# nodejs
-curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt install nodejs
-# gcc clang unzip python protobuf
-sudo apt install gcc clang unzip python3-venv protobuf-compiler
-# cargo
-curl https://sh.rustup.rs -sSf | sh 
-source $HOME/.cargo/env
+# 使用系统剪切板
+sudo pacman -S xclip
+# 安装所需依赖
+sudo pacman -S cargo cmake clang nodejs npm base-devel
 
 # wsl下
 # 设置vim.opt.clipboard = "unnamedplus" wsl下 nvim启动变慢解决
