@@ -169,11 +169,11 @@ return {
 				})
 			end,
 			["cmake"] = function()
-				-- config cmake language server
 				lspconfig["cmake"].setup({
 					capabilities = capabilities,
+					-- 让 cmake lsp 使用 neocmakelsp 命令
+					cmd = { "neocmakelsp", "--stdio" },
 					filetypes = { "cmake" },
-					init_options = { buildDirectory = "build" },
 					single_file_support = true,
 				})
 			end,
