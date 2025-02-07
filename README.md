@@ -14,9 +14,16 @@
 # 使用系统剪切板
 sudo pacman -S xclip
 # 安装所需依赖
-sudo pacman -S cargo cmake clang nodejs npm base-devel
+sudo pacman -S rust cmake clang base-devel
+
+# node
+yay -Sy nvm 
+nvm install --lts
 
 # wsl下
+# 剪切板问题
+yay -Sy win32yank-bin
+
 # 设置vim.opt.clipboard = "unnamedplus" wsl下 nvim启动变慢解决
 curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.1.1/win32yank-x64.zip
 unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
