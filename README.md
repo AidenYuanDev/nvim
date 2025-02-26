@@ -14,7 +14,7 @@
 # 使用系统剪切板
 sudo pacman -S xclip
 # 安装所需依赖
-sudo pacman -S rust cmake clang base-devel
+sudo pacman -S rust cmake clang base-devel ripgrep
 
 # node
 yay -Sy nvm 
