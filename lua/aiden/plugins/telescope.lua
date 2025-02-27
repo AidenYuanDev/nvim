@@ -67,6 +67,7 @@ return {
 					},
 				},
 
+				-- 添加全局过滤规则
 				vimgrep_arguments = {
 					"rg",
 					"--color=never",
@@ -78,6 +79,15 @@ return {
 					"--hidden",
 					"--trim",
 					"--no-ignore",
+					-- 排除 .log 文件和其他常见的不需要搜索的文件
+					"--glob=!*.log",
+					"--glob=!*.csv",
+					"--glob=!*.json",
+					"--glob=!*.lock",
+					"--glob=!*.min.js",
+					"--glob=!*.map",
+					"--glob=!node_modules/*",
+					"--glob=!.git/*",
 				},
 
 				borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
@@ -99,13 +109,58 @@ return {
 						},
 					},
 					additional_args = function()
-						return { "--hidden", "--no-ignore" }
+						return {
+							"--hidden",
+							"--no-ignore",
+							-- 在 live_grep 搜索中添加额外的过滤规则
+							"--glob=!*.log",
+							"--glob=!*.csv",
+							"--glob=!*.json",
+							"--glob=!*.lock",
+							"--glob=!*.min.js",
+							"--glob=!*.map",
+							"--glob=!node_modules/*",
+							"--glob=!.git/*",
+							"--glob=!vendor/*",
+							"--glob=!dist/*",
+							"--glob=!build/*",
+						}
 					end,
 				},
 
 				find_files = {
 					hidden = true,
 					layout_strategy = "flex",
+					-- 添加文件搜索过滤规则
+					find_command = {
+						"fd",
+						"--type",
+						"f",
+						"--hidden",
+						"--no-ignore",
+						"--exclude",
+						"*.log",
+						"--exclude",
+						"*.csv",
+						"--exclude",
+						"*.json",
+						"--exclude",
+						"*.lock",
+						"--exclude",
+						"*.min.js",
+						"--exclude",
+						"*.map",
+						"--exclude",
+						"node_modules",
+						"--exclude",
+						".git",
+						"--exclude",
+						"vendor",
+						"--exclude",
+						"dist",
+						"--exclude",
+						"build",
+					},
 				},
 
 				current_buffer_fuzzy_find = {
@@ -127,6 +182,20 @@ return {
 					previewer = true,
 					hijack_netrw = true,
 					layout_strategy = "flex",
+					-- 文件浏览器过滤
+					file_ignore_patterns = {
+						"%.log$",
+						"%.csv$",
+						"%.json$",
+						"%.lock$",
+						"%.min.js$",
+						"%.map$",
+						"node_modules/",
+						".git/",
+						"vendor/",
+						"dist/",
+						"build/",
+					},
 				},
 			},
 		})
