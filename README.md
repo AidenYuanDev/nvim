@@ -19,6 +19,8 @@ sudo pacman -S rust cmake clang base-devel ripgrep fd
 # node
 yay -Sy nvm 
 nvm install --lts
+# 添加到.zshrc
+source /usr/share/nvm/init-nvm.sh
 
 # wsl下
 # 剪切板问题
