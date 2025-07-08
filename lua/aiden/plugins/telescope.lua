@@ -3,9 +3,11 @@ return {
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 		"nvim-telescope/telescope-file-browser.nvim",
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-telescope/telescope-fzf-native.nvim",
+    "nvim-telescope/telescope-fzy-native.nvim"
 	},
 	config = function()
 		local telescope = require("telescope")
