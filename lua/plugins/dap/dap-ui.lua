@@ -8,24 +8,13 @@ return {
 			"nvim-neotest/nvim-nio",
 		},
 		keys = {
-			-- ==================== UI 控制 ====================
 			{
-				"<leader>du",
+				"<leader>dB",
 				function()
-					require("dapui").toggle({})
+					require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
 				end,
-				desc = "Toggle DAP UI",
+				desc = "Breakpoint Condition",
 			},
-			{
-				"<leader>de",
-				function()
-					require("dapui").eval()
-				end,
-				desc = "Eval Expression",
-				mode = { "n", "v" },
-			},
-
-			-- ==================== 断点管理 ====================
 			{
 				"<leader>db",
 				function()
@@ -34,57 +23,18 @@ return {
 				desc = "Toggle Breakpoint",
 			},
 			{
-				"<leader>dB",
-				function()
-					require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-				end,
-				desc = "Conditional Breakpoint",
-			},
-			{
-				"<leader>dL",
-				function()
-					require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
-				end,
-				desc = "Log Point",
-			},
-			{
-				"<leader>dx",
-				function()
-					require("dap").clear_breakpoints()
-				end,
-				desc = "Clear All Breakpoints",
-			},
-
-			-- ==================== 运行控制 ====================
-			{
 				"<leader>dc",
 				function()
 					require("dap").continue()
 				end,
-				desc = "Start/Continue",
+				desc = "Run/Continue",
 			},
 			{
 				"<leader>da",
 				function()
-					local dap = require("dap")
-					dap.continue({
-						before = function(config)
-							local args = vim.fn.input("Arguments: ")
-							if args ~= "" then
-								config.args = vim.split(args, " +")
-							end
-							return config
-						end,
-					})
+					require("dap").continue({ before = get_args })
 				end,
 				desc = "Run with Args",
-			},
-			{
-				"<leader>dl",
-				function()
-					require("dap").run_last()
-				end,
-				desc = "Run Last",
 			},
 			{
 				"<leader>dC",
@@ -94,21 +44,12 @@ return {
 				desc = "Run to Cursor",
 			},
 			{
-				"<leader>dt",
+				"<leader>dg",
 				function()
-					require("dap").terminate()
+					require("dap").goto_()
 				end,
-				desc = "Terminate",
+				desc = "Go to Line (No Execute)",
 			},
-			{
-				"<leader>dP",
-				function()
-					require("dap").pause()
-				end,
-				desc = "Pause",
-			},
-
-			-- ==================== 单步调试 ====================
 			{
 				"<leader>di",
 				function()
@@ -117,42 +58,47 @@ return {
 				desc = "Step Into",
 			},
 			{
-				"<leader>dO",
-				function()
-					require("dap").step_out()
-				end,
-				desc = "Step Out",
-			},
-			{
-				"<leader>do",
-				function()
-					require("dap").step_over()
-				end,
-				desc = "Step Over",
-			},
-			{
-				"<leader>dg",
-				function()
-					require("dap").goto_()
-				end,
-				desc = "Go to Line (No Execute)",
-			},
-			{
 				"<leader>dj",
 				function()
 					require("dap").down()
 				end,
-				desc = "Down Stack",
+				desc = "Down",
 			},
 			{
 				"<leader>dk",
 				function()
 					require("dap").up()
 				end,
-				desc = "Up Stack",
+				desc = "Up",
 			},
-
-			-- ==================== REPL & Session ====================
+			{
+				"<leader>dl",
+				function()
+					require("dap").run_last()
+				end,
+				desc = "Run Last",
+			},
+			{
+				"<leader>do",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "Step Out",
+			},
+			{
+				"<leader>dO",
+				function()
+					require("dap").step_over()
+				end,
+				desc = "Step Over",
+			},
+			{
+				"<leader>dP",
+				function()
+					require("dap").pause()
+				end,
+				desc = "Pause",
+			},
 			{
 				"<leader>dr",
 				function()
@@ -165,49 +111,125 @@ return {
 				function()
 					require("dap").session()
 				end,
-				desc = "Show Session",
+				desc = "Session",
+			},
+			{
+				"<leader>dt",
+				function()
+					require("dap").terminate()
+				end,
+				desc = "Terminate",
 			},
 			{
 				"<leader>dw",
 				function()
 					require("dap.ui.widgets").hover()
 				end,
-				desc = "Widgets (Hover)",
-			},
-			{
-				"<leader>df",
-				function()
-					local widgets = require("dap.ui.widgets")
-					widgets.centered_float(widgets.frames)
-				end,
-				desc = "Show Frames",
-			},
-			{
-				"<leader>dS",
-				function()
-					local widgets = require("dap.ui.widgets")
-					widgets.centered_float(widgets.scopes)
-				end,
-				desc = "Show Scopes",
+				desc = "Widgets",
 			},
 		},
-		opts = {},
-		config = function(_, opts)
-			local dap = require("dap")
-			local dapui = require("dapui")
+		config = function()
+			local dap, dapui = require("dap"), require("dapui")
+			dap.listeners.before.attach.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.launch.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated.dapui_config = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited.dapui_config = function()
+				dapui.close()
+			end
 
-			dapui.setup(opts)
+			dapui.setup({
+				-- 控制面板配置（显示在 REPL 窗口顶部）
+				controls = {
+					element = "repl",
+					enabled = true,
+					icons = {
+						disconnect = "",
+						pause = "",
+						play = "",
+						run_last = "",
+						step_back = "",
+						step_into = "",
+						step_out = "",
+						step_over = "",
+						terminate = "",
+					},
+				},
 
-			-- 自动打开/关闭 UI
-			dap.listeners.after.event_initialized["dapui_config"] = function()
-				dapui.open({})
-			end
-			dap.listeners.before.event_terminated["dapui_config"] = function()
-				dapui.close({})
-			end
-			dap.listeners.before.event_exited["dapui_config"] = function()
-				dapui.close({})
-			end
+				element_mappings = {},
+				expand_lines = true,
+
+				-- 浮动窗口配置
+				floating = {
+					border = "rounded",
+					mappings = {
+						close = { "q", "<Esc>" },
+					},
+				},
+
+				force_buffers = true,
+
+				-- 图标
+				icons = {
+					collapsed = "",
+					current_frame = "",
+					expanded = "",
+				},
+
+				-- 🎯 左右分屏布局
+				layouts = {
+					-- 左侧边栏：变量 + 调用栈
+					{
+						elements = {
+							{ id = "scopes", size = 0.6 }, -- 变量作用域 60%
+							{ id = "stacks", size = 0.4 }, -- 调用栈 40%
+						},
+						position = "left",
+						size = 50, -- 左侧宽度 50 列
+					},
+
+					-- 右侧边栏：断点 + 监视
+					{
+						elements = {
+							{ id = "breakpoints", size = 0.5 }, -- 断点列表 50%
+							{ id = "watches", size = 0.5 }, -- 监视表达式 50%
+						},
+						position = "right",
+						size = 40, -- 右侧宽度 40 列
+					},
+
+					-- 底部面板：REPL + Console
+					{
+						elements = {
+							{ id = "repl", size = 0.5 }, -- 交互式 REPL 50%
+							{ id = "console", size = 0.5 }, -- 程序输出 50%
+						},
+						position = "bottom",
+						size = 12, -- 底部高度 12 行
+					},
+				},
+
+				-- 按键映射
+				mappings = {
+					edit = "e",
+					expand = { "<CR>", "<2-LeftMouse>" },
+					open = "o",
+					remove = "d",
+					repl = "r",
+					toggle = "t",
+				},
+
+				-- 渲染设置
+				render = {
+					indent = 1,
+					max_value_lines = 100,
+				},
+			})
 
 			-- 设置断点图标
 			vim.fn.sign_define("DapBreakpoint", {
