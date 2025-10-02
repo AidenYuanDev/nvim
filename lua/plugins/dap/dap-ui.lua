@@ -6,140 +6,21 @@ return {
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
-		},
-		keys = {
+			-- virtual text for the debugger
 			{
-				"<leader>dB",
-				function()
-					require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-				end,
-				desc = "Breakpoint Condition",
-			},
-			{
-				"<leader>db",
-				function()
-					require("dap").toggle_breakpoint()
-				end,
-				desc = "Toggle Breakpoint",
-			},
-			{
-				"<leader>dc",
-				function()
-					require("dap").continue()
-				end,
-				desc = "Run/Continue",
-			},
-			{
-				"<leader>da",
-				function()
-					require("dap").continue({ before = get_args })
-				end,
-				desc = "Run with Args",
-			},
-			{
-				"<leader>dC",
-				function()
-					require("dap").run_to_cursor()
-				end,
-				desc = "Run to Cursor",
-			},
-			{
-				"<leader>dg",
-				function()
-					require("dap").goto_()
-				end,
-				desc = "Go to Line (No Execute)",
-			},
-			{
-				"<leader>di",
-				function()
-					require("dap").step_into()
-				end,
-				desc = "Step Into",
-			},
-			{
-				"<leader>dj",
-				function()
-					require("dap").down()
-				end,
-				desc = "Down",
-			},
-			{
-				"<leader>dk",
-				function()
-					require("dap").up()
-				end,
-				desc = "Up",
-			},
-			{
-				"<leader>dl",
-				function()
-					require("dap").run_last()
-				end,
-				desc = "Run Last",
-			},
-			{
-				"<leader>do",
-				function()
-					require("dap").step_out()
-				end,
-				desc = "Step Out",
-			},
-			{
-				"<leader>dO",
-				function()
-					require("dap").step_over()
-				end,
-				desc = "Step Over",
-			},
-			{
-				"<leader>dP",
-				function()
-					require("dap").pause()
-				end,
-				desc = "Pause",
-			},
-			{
-				"<leader>dr",
-				function()
-					require("dap").repl.toggle()
-				end,
-				desc = "Toggle REPL",
-			},
-			{
-				"<leader>ds",
-				function()
-					require("dap").session()
-				end,
-				desc = "Session",
-			},
-			{
-				"<leader>dt",
-				function()
-					require("dap").terminate()
-				end,
-				desc = "Terminate",
-			},
-			{
-				"<leader>dw",
-				function()
-					require("dap.ui.widgets").hover()
-				end,
-				desc = "Widgets",
+				"theHamsta/nvim-dap-virtual-text",
+				opts = {},
 			},
 		},
 		config = function()
 			local dap, dapui = require("dap"), require("dapui")
-			dap.listeners.before.attach.dapui_config = function()
+			dap.listeners.after.event_initialized["dapui_config"] = function()
 				dapui.open()
 			end
-			dap.listeners.before.launch.dapui_config = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated.dapui_config = function()
+			dap.listeners.before.event_terminated["dapui_config"] = function()
 				dapui.close()
 			end
-			dap.listeners.before.event_exited.dapui_config = function()
+			dap.listeners.before.event_exited["dapui_config"] = function()
 				dapui.close()
 			end
 
@@ -150,14 +31,14 @@ return {
 					enabled = true,
 					icons = {
 						disconnect = "",
-						pause = "",
-						play = "",
-						run_last = "",
-						step_back = "",
+						pause = "",
+						play = "",
+						run_last = "↻",
+						step_back = "",
 						step_into = "",
 						step_out = "",
-						step_over = "",
-						terminate = "",
+						step_over = "󰆷",
+						terminate = "󰝤",
 					},
 				},
 
@@ -183,34 +64,24 @@ return {
 
 				-- 🎯 左右分屏布局
 				layouts = {
-					-- 左侧边栏：变量 + 调用栈
+					-- 左侧：只显示变量
 					{
 						elements = {
-							{ id = "scopes", size = 0.6 }, -- 变量作用域 60%
-							{ id = "stacks", size = 0.4 }, -- 调用栈 40%
+							{ id = "scopes", size = 0.5 },
+							{ id = "watches", size = 0.3 },
+							{ id = "console", size = 0.2 },
 						},
 						position = "left",
-						size = 50, -- 左侧宽度 50 列
+						size = 30,
 					},
 
-					-- 右侧边栏：断点 + 监视
+					-- 底部：只显示控制台输出
 					{
 						elements = {
-							{ id = "breakpoints", size = 0.5 }, -- 断点列表 50%
-							{ id = "watches", size = 0.5 }, -- 监视表达式 50%
-						},
-						position = "right",
-						size = 40, -- 右侧宽度 40 列
-					},
-
-					-- 底部面板：REPL + Console
-					{
-						elements = {
-							{ id = "repl", size = 0.5 }, -- 交互式 REPL 50%
-							{ id = "console", size = 0.5 }, -- 程序输出 50%
+							{ id = "repl", size = 1 },
 						},
 						position = "bottom",
-						size = 12, -- 底部高度 12 行
+						size = 6,
 					},
 				},
 
@@ -231,53 +102,46 @@ return {
 				},
 			})
 
+			vim.api.nvim_set_hl(0, "DapBreakpoint", { link = "DiagnosticError" })
+			vim.api.nvim_set_hl(0, "DapBreakpointCondition", { link = "DiagnosticWarn" })
+			vim.api.nvim_set_hl(0, "DapStopped", { link = "DiagnosticInfo" })
+			vim.api.nvim_set_hl(0, "DapLogPoint", { link = "DiagnosticHint" })
+			vim.api.nvim_set_hl(0, "DapBreakpointRejected", { link = "Comment" })
+
 			-- 设置断点图标
 			vim.fn.sign_define("DapBreakpoint", {
-				text = "🔴",
+				text = " ",
 				texthl = "DapBreakpoint",
 				linehl = "",
-				numhl = "",
+				numhl = "DapBreakpoint",
 			})
 
 			vim.fn.sign_define("DapBreakpointCondition", {
 				text = "🟡",
 				texthl = "DapBreakpointCondition",
 				linehl = "",
-				numhl = "",
+				numhl = "DapBreakpointCondition",
+			})
+
+			vim.fn.sign_define("DapStopped", {
+				text = "󰁕 ",
+				texthl = "DapStopped",
+				linehl = "Visual",
+				numhl = "DapStopped",
 			})
 
 			vim.fn.sign_define("DapBreakpointRejected", {
 				text = "⭕",
 				texthl = "DapBreakpointRejected",
 				linehl = "",
-				numhl = "",
-			})
-
-			vim.fn.sign_define("DapStopped", {
-				text = "➤",
-				texthl = "DapStopped",
-				linehl = "DapStoppedLine",
-				numhl = "",
+				numhl = "DapBreakpointRejected",
 			})
 
 			vim.fn.sign_define("DapLogPoint", {
-				text = "📝",
+				text = "💬",
 				texthl = "DapLogPoint",
 				linehl = "",
-				numhl = "",
-			})
-		end,
-	},
-
-	-- Virtual text
-	{
-		"theHamsta/nvim-dap-virtual-text",
-		dependencies = { "mfussenegger/nvim-dap" },
-		config = function()
-			require("nvim-dap-virtual-text").setup({
-				highlight_new_as_changed = true,
-				commented = true,
-				all_references = true,
+				numhl = "DapLogPoint",
 			})
 		end,
 	},
