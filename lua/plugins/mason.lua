@@ -17,26 +17,19 @@ return {
 	end,
 	opts = {
 		ensure_installed = {
-			-- Web
 			"html-lsp",
 			"css-lsp",
 			"json-lsp",
 			"yaml-language-server",
-      "stylua",
-
-			-- 系统
+			"stylua",
 			"clangd",
 			"gopls",
-			-- 脚本
 			"pyright",
 			"bash-language-server",
-			-- 文档/配置
 			"marksman",
 			"lemminx",
 			"taplo",
-			-- Python lint LSP
 			"ruff",
-			-- Proto 的回退 LSP（当没有 buf CLI 时用）
 			"protols",
 		},
 	},

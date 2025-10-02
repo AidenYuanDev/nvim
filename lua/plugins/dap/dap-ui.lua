@@ -1,4 +1,3 @@
--- dap-ui.lua
 return {
 	-- DAP UI
 	{
@@ -9,7 +8,14 @@ return {
 			-- virtual text for the debugger
 			{
 				"theHamsta/nvim-dap-virtual-text",
-				opts = {},
+				config = function()
+					require("nvim-dap-virtual-text").setup({
+						all_references = true,
+						commented = true,
+						highlight_new_as_changed = true,
+						virt_text_pos = "eol",
+					})
+				end,
 			},
 		},
 		config = function()
@@ -25,7 +31,6 @@ return {
 			end
 
 			dapui.setup({
-				-- 控制面板配置（显示在 REPL 窗口顶部）
 				controls = {
 					element = "repl",
 					enabled = true,
@@ -45,7 +50,6 @@ return {
 				element_mappings = {},
 				expand_lines = true,
 
-				-- 浮动窗口配置
 				floating = {
 					border = "rounded",
 					mappings = {
@@ -55,37 +59,33 @@ return {
 
 				force_buffers = true,
 
-				-- 图标
 				icons = {
 					collapsed = "",
 					current_frame = "",
 					expanded = "",
 				},
 
-				-- 🎯 左右分屏布局
 				layouts = {
-					-- 左侧：只显示变量
-					{
-						elements = {
-							{ id = "scopes", size = 0.5 },
-							{ id = "watches", size = 0.3 },
-							{ id = "console", size = 0.2 },
-						},
-						position = "left",
-						size = 30,
-					},
+					-- {
+					-- 	elements = {
+					-- 		{ id = "scopes", size = 0.5 },
+					-- 		{ id = "watches", size = 0.3 },
+					-- 		{ id = "console", size = 0.2 },
+					-- 	},
+					-- 	position = "left",
+					-- 	size = 30,
+					-- },
 
-					-- 底部：只显示控制台输出
 					{
 						elements = {
-							{ id = "repl", size = 1 },
+							{ id = "repl", size = 0.5 },
+							{ id = "console", size = 0.5 },
 						},
 						position = "bottom",
-						size = 6,
+						size = 12,
 					},
 				},
 
-				-- 按键映射
 				mappings = {
 					edit = "e",
 					expand = { "<CR>", "<2-LeftMouse>" },
@@ -95,7 +95,6 @@ return {
 					toggle = "t",
 				},
 
-				-- 渲染设置
 				render = {
 					indent = 1,
 					max_value_lines = 100,
@@ -108,7 +107,6 @@ return {
 			vim.api.nvim_set_hl(0, "DapLogPoint", { link = "DiagnosticHint" })
 			vim.api.nvim_set_hl(0, "DapBreakpointRejected", { link = "Comment" })
 
-			-- 设置断点图标
 			vim.fn.sign_define("DapBreakpoint", {
 				text = " ",
 				texthl = "DapBreakpoint",
@@ -153,10 +151,10 @@ return {
 			"williamboman/mason.nvim",
 			"mfussenegger/nvim-dap",
 		},
-		event = "VeryLazy", -- ✅ 启动后立即加载
+		event = "VeryLazy",
 		config = function()
 			require("mason-nvim-dap").setup({
-				ensure_installed = { "codelldb" },
+				ensure_installed = { "codelldb", "python" },
 				handlers = {
 					function(config)
 						require("mason-nvim-dap").default_setup(config)
