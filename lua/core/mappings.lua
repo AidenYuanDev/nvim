@@ -4,10 +4,15 @@ require("nvchad.mappings")
 
 local map = vim.keymap.set
 
+-- ═══════════════════════════════════════════════════
+-- Basic
+-- ═══════════════════════════════════════════════════
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
 map("v", "<Tab>", ">gv", { desc = "Indent right" })
 map("v", "<S-Tab>", "<gv", { desc = "Indent left" })
+map("n", "<leader>ww", "<cmd>w<CR>", { desc = "File Save" })
+map("n", "<leader>q", "<cmd>q<CR>", { desc = "File Quit all" })
 
 -- ═══════════════════════════════════════════════════
 -- DAP
