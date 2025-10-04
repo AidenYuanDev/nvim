@@ -6,7 +6,8 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+map("v", "<Tab>", ">gv", { desc = "Indent right" })
+map("v", "<S-Tab>", "<gv", { desc = "Indent left" })
 
 -- ═══════════════════════════════════════════════════
 -- DAP
