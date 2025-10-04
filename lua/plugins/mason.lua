@@ -22,6 +22,7 @@ return {
 			"json-lsp",
 			"yaml-language-server",
 			"stylua",
+			"lua-language-server",
 			"clangd",
 			"gopls",
 			"pyright",
