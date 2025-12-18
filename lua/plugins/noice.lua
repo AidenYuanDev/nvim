@@ -11,7 +11,7 @@ return {
 	},
 	opts = {
 		notify = {
-			enabled = true,
+			enabled = false,
 			view = "notify",
 		},
 		lsp = {
