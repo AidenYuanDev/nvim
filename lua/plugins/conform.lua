@@ -14,6 +14,7 @@ return {
 				markdown = { "prettier" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
+				cmake = { "cmake_format" },
 				go = { "gofumpt", "goimports" },
 				python = { "ruff_organize_imports", "ruff_format" },
 				lua = { "stylua" },
@@ -50,6 +51,12 @@ return {
 				},
 				["shfmt"] = {
 					prepend_args = { "-i", "2", "-ci" },
+				},
+				["cmake_format"] = {
+					prepend_args = {
+						"--tab-size",
+						"2",
+					},
 				},
 			},
 		})

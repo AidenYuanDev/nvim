@@ -23,6 +23,7 @@ return {
 			"yaml-language-server",
 			"stylua",
 			"clangd",
+			"cmakelang",
 			"gopls",
 			"pyright",
 			"bash-language-server",
