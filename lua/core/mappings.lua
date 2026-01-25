@@ -299,3 +299,9 @@ end, { silent = true, expr = true, desc = "Noice scroll backward" })
 -- Venv Select
 -- ═══════════════════════════════════════════════════
 -- keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" } },
+
+-- ═══════════════════════════════════════════════════
+-- Countdown
+-- ═══════════════════════════════════════════════════
+map("n", "<leader>tc", "<cmd>Countdown<CR>", { desc = "Countdown check remaining" })
+map("n", "<leader>ts", "<cmd>CountdownStop<CR>", { desc = "Countdown stop" })
