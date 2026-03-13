@@ -63,22 +63,3 @@ mkdir -p ~/.config
 git clone https://github.com/AidenYuanDev/nvim.git ~/.config/nvim
 nvim
 ```
-
-## WSL Setup
-
-Clipboard sharing requires additional setup under WSL:
-
-```bash
-curl -sL $(curl -s https://api.github.com/repos/equalsraf/win32yank/releases/latest \
-  | grep "browser_download_url.*win32yank-x64.zip" | cut -d '"' -f 4) -o /tmp/win32yank.zip
-unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
-chmod +x /tmp/win32yank.exe
-sudo mv /tmp/win32yank.exe /usr/local/bin/
-rm -f /tmp/win32yank.zip
-```
-
-Make sure your config includes:
-
-```lua
-vim.opt.clipboard = "unnamedplus"
-```
