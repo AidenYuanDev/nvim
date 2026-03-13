@@ -32,7 +32,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Neovim (AppImage)
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
 chmod u+x nvim-linux-x86_64.appimage
-sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
+sudo mv nvim-linux-x86_64.appimage /usr/bin/nvim
 
 # Dependencies
 sudo apt install xclip cmake clang build-essential ripgrep fd-find curl git
@@ -54,7 +54,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Neovim (AppImage)
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
 chmod u+x nvim-linux-x86_64.appimage
-sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
+sudo mv nvim-linux-x86_64.appimage /usr/bin/nvim
 
 # Dependencies
 sudo dnf install xclip cmake clang gcc-c++ ripgrep fd-find curl git
