@@ -1,64 +1,84 @@
-# 使用说明
+# Neovim Config
 
-[Neovim >= v0.8.0](https://github.com/neovim/neovim/releases)
+> Personal Neovim configuration based on [NvChad](https://nvchad.com/docs/quickstart/install/)
 
-# 快速开始
+![Screenshot](./RunChart.png)
 
-运行图
+## Requirements
 
-![image-20240417142308619](./RunChart.png)
+- [Neovim >= v0.11](https://github.com/neovim/neovim/releases)
+- [ripgrep](https://github.com/BurntSushi/ripgrep) (Telescope live grep)
+- [fd](https://github.com/sharkdp/fd) (Telescope file finder)
+- [Rust](https://rust-lang.org/) (nvim-tree)
 
-安装所需依赖
+## Quick Start
+
+### Arch Linux
 
 ```bash
-# 使用系统剪切板
-sudo pacman -S xclip
-# 安装所需依赖
-sudo pacman -S rust cmake clang base-devel ripgrep fd
+sudo pacman -S neovim xclip cmake clang base-devel ripgrep fd git
 
-# node
-yay -Sy nvm 
-nvm install --lts
-# 添加到.zshrc
-source /usr/share/nvm/init-nvm.sh
-
-# wsl下
-# 剪切板问题
-yay -Sy win32yank-bin
-
-# 设置vim.opt.clipboard = "unnamedplus" wsl下 nvim启动变慢解决
-curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.1.1/win32yank-x64.zip
-unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
-chmod +x /tmp/win32yank.exe
-sudo mv /tmp/win32yank.exe /usr/local/bin/
-sudo rm -rf /tmp/win32yank.zip
+mkdir -p ~/.config
+git clone https://github.com/AidenYuanDev/nvim.git ~/.config/nvim
+nvim
 ```
 
-安装本项目
+### Ubuntu / Debian
 
 ```bash
-mkdir ~/.config
-cd ~/.config
-git clone https://github.com/StarryDecade/Neovim-config.git
-mv Neovim-config nvim
-cd nvim
-# 这里会黑屏正常现象，在下载插件，多进入几次。
-nvim init.lua
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-# telescope 出错 
-If you're using the LazyVim plugin manager for Neovim, follow these steps:
+# Neovim (AppImage)
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+chmod u+x nvim-linux-x86_64.appimage
+sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
 
-Open LazyVim by typing :Lazy.
-Use the up/down arrow keys to highlight telescope-fzf-native.nvim and press Enter.
-Then, press the keys g followed by b (i.e., gb) in succession to start compiling the libfzf.so library file that is missing. The task will appear briefly in the :Lazy window.
-Exit the LazyVim window with :q.
-Finally, reopen nvim.
+# Dependencies
+sudo apt install xclip cmake clang build-essential ripgrep fd-find curl git
 
-# wsl 下剪切板互通
+# fd-find binary is named fdfind on Ubuntu, create a symlink
+ln -s $(which fdfind) ~/.local/bin/fd
 
-curl -sL $(curl -s https://api.github.com/repos/equalsraf/win32yank/releases/latest | grep "browser_download_url.*win32yank-x64.zip" | cut -d '"' -f 4) -o /tmp/win32yank.zip 
+mkdir -p ~/.config
+git clone https://github.com/AidenYuanDev/nvim.git ~/.config/nvim
+nvim
+```
+
+### CentOS / RHEL
+
+```bash
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Neovim (AppImage)
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+chmod u+x nvim-linux-x86_64.appimage
+sudo mv nvim-linux-x86_64.appimage /usr/local/bin/nvim
+
+# Dependencies
+sudo dnf install xclip cmake clang gcc-c++ ripgrep fd-find curl git
+
+mkdir -p ~/.config
+git clone https://github.com/AidenYuanDev/nvim.git ~/.config/nvim
+nvim
+```
+
+## WSL Setup
+
+Clipboard sharing requires additional setup under WSL:
+
+```bash
+curl -sL $(curl -s https://api.github.com/repos/equalsraf/win32yank/releases/latest \
+  | grep "browser_download_url.*win32yank-x64.zip" | cut -d '"' -f 4) -o /tmp/win32yank.zip
 unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
 chmod +x /tmp/win32yank.exe
 sudo mv /tmp/win32yank.exe /usr/local/bin/
+rm -f /tmp/win32yank.zip
+```
 
+Make sure your config includes:
+
+```lua
+vim.opt.clipboard = "unnamedplus"
 ```
