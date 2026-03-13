@@ -2,7 +2,7 @@
 
 > Personal Neovim configuration based on [NvChad](https://nvchad.com/docs/quickstart/install/)
 
-![Screenshot](./RunChart.png)
+![Screenshot](./assets/screenshot.png)
 
 ## Requirements
 
