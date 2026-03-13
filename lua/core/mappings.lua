@@ -41,6 +41,26 @@ map("n", "<F12>", function()
 	require("dap").step_out()
 end, { desc = "Debug step out" })
 
+map("n", "<leader>dc", function()
+	require("dap").continue()
+end, { desc = "Debug continue" })
+
+map("n", "<leader>dn", function()
+	require("dap").step_over()
+end, { desc = "Debug step over" })
+
+map("n", "<leader>ds", function()
+	require("dap").step_into()
+end, { desc = "Debug step into" })
+
+map("n", "<leader>do", function()
+	require("dap").step_out()
+end, { desc = "Debug step out" })
+
+map("n", "<leader>dr", function()
+	require("dap").run_to_cursor()
+end, { desc = "Debug run to cursor" })
+
 map("n", "<leader>dt", function()
 	require("dap").terminate()
 end, { desc = "Debug terminate" })
@@ -61,7 +81,7 @@ map("n", "<leader>dib", function()
 	require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
 end, { desc = "Debug log point" })
 
-map("n", "<leader>dcb", function()
+map("n", "<leader>dxb", function()
 	require("dap").clear_breakpoints()
 end, { desc = "Debug clear breakpoints" })
 
@@ -209,7 +229,7 @@ map("n", "<leader>daw", function()
 	end
 end, { desc = "Debug add watch (input)" })
 
-map("n", "<leader>dcw", function()
+map("n", "<leader>dxw", function()
 	local watches = require("dapui").elements.watches.get()
 	for i = #watches, 1, -1 do
 		require("dapui").elements.watches.remove(i)
