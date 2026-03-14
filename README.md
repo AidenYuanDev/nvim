@@ -10,13 +10,14 @@
 - [ripgrep](https://github.com/BurntSushi/ripgrep) (Telescope live grep)
 - [fd](https://github.com/sharkdp/fd) (Telescope file finder)
 - [Rust](https://rust-lang.org/) (nvim-tree)
+- [claude code](https://claude.com/product/claude-code)(Claude code)
 
 ## Quick Start
 
 ### Arch Linux
 
 ```bash
-sudo pacman -S neovim xclip cmake clang base-devel ripgrep fd git
+sudo pacman -S neovim xclip cmake clang base-devel ripgrep fd git claude-code
 
 mkdir -p ~/.config
 git clone https://github.com/AidenYuanDev/nvim.git ~/.config/nvim
@@ -28,6 +29,9 @@ nvim
 ```bash
 # Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Claude-code 
+curl -fsSL https://claude.ai/install.sh | bash
 
 # Neovim (AppImage)
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
@@ -50,6 +54,9 @@ nvim
 ```bash
 # Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Claude-code 
+curl -fsSL https://claude.ai/install.sh | bash
 
 # Neovim (AppImage)
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
