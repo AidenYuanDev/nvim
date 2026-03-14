@@ -11,13 +11,14 @@
 - [fd](https://github.com/sharkdp/fd) (Telescope file finder)
 - [Rust](https://rust-lang.org/) (nvim-tree)
 - [claude code](https://claude.com/product/claude-code)(Claude code)
+- [ImageMagick](https://github.com/ImageMagick/ImageMagick)(need for image)
 
 ## Quick Start
 
 ### Arch Linux
 
 ```bash
-sudo pacman -S neovim xclip cmake clang base-devel ripgrep fd git claude-code
+sudo pacman -S neovim xclip cmake clang base-devel ripgrep fd git claude-code imagemagick kitty
 
 mkdir -p ~/.config
 git clone https://github.com/AidenYuanDev/nvim.git ~/.config/nvim
@@ -38,8 +39,12 @@ curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x8
 chmod u+x nvim-linux-x86_64.appimage
 sudo mv nvim-linux-x86_64.appimage /usr/bin/nvim
 
+# imagemagick 
+# use this link 
+# https://software.opensuse.org/download.html?project=home%3Ajustkidding&package=ueberzugpp
+
 # Dependencies
-sudo apt install xclip cmake clang build-essential ripgrep fd-find curl git
+sudo apt install xclip cmake clang build-essential ripgrep fd-find curl git kitty
 
 # fd-find binary is named fdfind on Ubuntu, create a symlink
 ln -s $(which fdfind) ~/.local/bin/fd
@@ -64,7 +69,7 @@ chmod u+x nvim-linux-x86_64.appimage
 sudo mv nvim-linux-x86_64.appimage /usr/bin/nvim
 
 # Dependencies
-sudo dnf install xclip cmake clang gcc-c++ ripgrep fd-find curl git
+sudo dnf install xclip cmake clang gcc-c++ ripgrep fd-find curl git ImageMagick
 
 mkdir -p ~/.config
 git clone https://github.com/AidenYuanDev/nvim.git ~/.config/nvim
