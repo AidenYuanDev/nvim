@@ -19,6 +19,8 @@ map("t", "jk", "<C-\\><C-n>", { desc = "Exit terminal insert mode" })
 -- ═══════════════════════════════════════════════════
 -- DAP
 -- ═══════════════════════════════════════════════════
+
+-- ── Function keys ───────────────────────────────────
 map("n", "<F5>", function()
 	require("dap").continue()
 end, { desc = "Debug continue" })
@@ -43,6 +45,7 @@ map("n", "<F12>", function()
 	require("dap").step_out()
 end, { desc = "Debug step out" })
 
+-- ── Session control ─────────────────────────────────
 map("n", "<leader>dc", function()
 	require("dap").continue()
 end, { desc = "Debug continue" })
@@ -63,14 +66,28 @@ map("n", "<leader>dr", function()
 	require("dap").run_to_cursor()
 end, { desc = "Debug run to cursor" })
 
-map("n", "<leader>dt", function()
-	require("dap").terminate()
-end, { desc = "Debug terminate" })
-
 map("n", "<leader>dp", function()
 	require("dap").pause()
 end, { desc = "Debug pause" })
 
+map("n", "<leader>dt", function()
+	require("dap").terminate()
+	require("dapui").close()
+end, { desc = "Debug terminate" })
+
+map("n", "<leader>dR", function()
+	require("dap").restart()
+end, { desc = "Debug restart" })
+
+map("n", "<leader>d.", function()
+	require("dap").run_last()
+end, { desc = "Debug run last" })
+
+map("n", "<leader>dg", function()
+	require("dap").goto_()
+end, { desc = "Debug goto line" })
+
+-- ── Breakpoints ─────────────────────────────────────
 map("n", "<leader>db", function()
 	require("dap").toggle_breakpoint()
 end, { desc = "Debug toggle breakpoint" })
@@ -88,15 +105,53 @@ map("n", "<leader>dxb", function()
 end, { desc = "Debug clear breakpoints" })
 
 map("n", "<leader>dlb", function()
-	require("dapui").float_element("breakpoints", {
-		width = 80,
-		height = 20,
-		enter = true,
-		position = "center",
-		title = "Breakpoints",
-	})
-end, { desc = "Debug list breakpoints" })
+	require("dap").list_breakpoints()
+	vim.cmd("copen")
+end, { desc = "Debug list breakpoints (quickfix)" })
 
+map("n", "<leader>dE", function()
+	require("dap").set_exception_breakpoints()
+end, { desc = "Debug exception breakpoints" })
+
+-- ── Inspect (widgets) ───────────────────────────────
+map("n", "<leader>dls", function()
+	local widgets = require("dap.ui.widgets")
+	widgets.centered_float(widgets.frames)
+end, { desc = "Debug select frame" })
+
+map("n", "<leader>dlv", function()
+	local widgets = require("dap.ui.widgets")
+	widgets.centered_float(widgets.scopes)
+end, { desc = "Debug view scopes" })
+
+map("n", "<leader>dlt", function()
+	local widgets = require("dap.ui.widgets")
+	widgets.centered_float(widgets.threads)
+end, { desc = "Debug select thread" })
+
+map({ "n", "v" }, "<leader>dh", function()
+	require("dap.ui.widgets").hover()
+end, { desc = "Debug hover" })
+
+-- ── Stack navigation ────────────────────────────────
+map("n", "<leader>df", function()
+	require("dap").up()
+end, { desc = "Debug frame up" })
+
+map("n", "<leader>dF", function()
+	require("dap").down()
+end, { desc = "Debug frame down" })
+
+-- ── Memory ──────────────────────────────────────────
+map("n", "<leader>dm", function()
+	local addr = vim.fn.input("Memory address (hex): 0x")
+	if addr and addr ~= "" then
+		local widgets = require("dap.ui.widgets")
+		widgets.centered_float(widgets.expression("*(void**)0x" .. addr))
+	end
+end, { desc = "Debug view memory" })
+
+-- ── DAP Float (dapui) ───────────────────────────────
 map("n", "<leader>dlr", function()
 	require("dapui").float_element("repl", {
 		width = 100,
@@ -106,36 +161,6 @@ map("n", "<leader>dlr", function()
 		title = "REPL",
 	})
 end, { desc = "Debug float repl" })
-
-map("n", "<leader>dlv", function()
-	require("dapui").float_element("scopes", {
-		width = 100,
-		height = 30,
-		enter = true,
-		position = "center",
-		title = "Variables",
-	})
-end, { desc = "Debug float scopes" })
-
-map("n", "<leader>dls", function()
-	require("dapui").float_element("stacks", {
-		width = 80,
-		height = 25,
-		enter = true,
-		position = "center",
-		title = "Call Stack",
-	})
-end, { desc = "Debug float stacks" })
-
-map("n", "<leader>dlw", function()
-	require("dapui").float_element("watches", {
-		width = 60,
-		height = 15,
-		enter = true,
-		position = "center",
-		title = "Watches",
-	})
-end, { desc = "Debug float watches" })
 
 map("n", "<leader>dlo", function()
 	require("dapui").float_element("console", {
@@ -147,106 +172,7 @@ map("n", "<leader>dlo", function()
 	})
 end, { desc = "Debug float console" })
 
-map("n", "<leader>df", function()
-	require("dap").up()
-end, { desc = "Debug frame up" })
-
-map("n", "<leader>dF", function()
-	require("dap").down()
-end, { desc = "Debug frame down" })
-
-map("n", "<leader>dlt", function()
-	local dap = require("dap")
-	local session = dap.session()
-
-	if not session then
-		vim.notify("No active debug session", vim.log.levels.WARN)
-		return
-	end
-
-	session:request("threads", nil, function(err, response)
-		if err then
-			vim.notify("Error fetching threads: " .. err.message, vim.log.levels.ERROR)
-			return
-		end
-
-		local threads = {}
-		for _, thread in ipairs(response.threads) do
-			table.insert(threads, {
-				id = thread.id,
-				name = thread.name or "Thread " .. thread.id,
-			})
-		end
-
-		vim.ui.select(threads, {
-			prompt = "Select thread:",
-			format_item = function(thread)
-				return thread.name
-			end,
-		}, function(choice)
-			if choice then
-				session:request("stackTrace", {
-					threadId = choice.id,
-				}, function()
-					vim.notify("Switched to " .. choice.name, vim.log.levels.INFO)
-				end)
-			end
-		end)
-	end)
-end, { desc = "Debug switch thread" })
-
-map({ "n", "v" }, "<leader>de", function()
-	require("dapui").eval(nil, {
-		context = "hover",
-		enter = true,
-	})
-end, { desc = "Debug evaluate (hover)" })
-
-map({ "n", "v" }, "<leader>dw", function()
-	local expr
-	if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
-		vim.cmd('normal! "vy')
-		expr = vim.fn.getreg("v")
-	else
-		expr = vim.fn.expand("<cword>")
-	end
-
-	if expr and expr ~= "" then
-		require("dapui").elements.watches.add(expr)
-		vim.notify("Added to watches: " .. expr, vim.log.levels.INFO)
-	else
-		local input = vim.fn.input("Watch expression: ")
-		if input and input ~= "" then
-			require("dapui").elements.watches.add(input)
-			vim.notify("Added to watches: " .. input, vim.log.levels.INFO)
-		end
-	end
-end, { desc = "Debug add to watches" })
-
-map("n", "<leader>daw", function()
-	local expr = vim.fn.input("Watch expression: ")
-	if expr and expr ~= "" then
-		require("dapui").elements.watches.add(expr)
-		vim.notify("Added to watches: " .. expr, vim.log.levels.INFO)
-	end
-end, { desc = "Debug add watch (input)" })
-
-map("n", "<leader>dxw", function()
-	local watches = require("dapui").elements.watches.get()
-	for i = #watches, 1, -1 do
-		require("dapui").elements.watches.remove(i)
-	end
-	vim.notify("Cleared all watches", vim.log.levels.INFO)
-end, { desc = "Debug clear watches" })
-
-map("n", "<leader>dm", function()
-	local addr = vim.fn.input("Memory address (hex): 0x")
-	if addr and addr ~= "" then
-		local widgets = require("dap.ui.widgets")
-		widgets.centered_float(widgets.expression("*(void**)0x" .. addr))
-	end
-end, { desc = "Debug view memory" })
-
+-- ── DAP UI Toggle ───────────────────────────────────
 map("n", "<leader>du", function()
 	require("dapui").toggle()
 end, { desc = "Debug toggle ui" })
