@@ -13,6 +13,8 @@ map("v", "<Tab>", ">gv", { desc = "Indent right" })
 map("v", "<S-Tab>", "<gv", { desc = "Indent left" })
 map("n", "<leader>ww", "<cmd>w<CR>", { desc = "File Save" })
 map("n", "<leader>q", "<cmd>q!<CR>", { desc = "File Quit all" })
+map("i", "jk", "<ESC>", { desc = "Exit terminal insert mode" })
+map("t", "jk", "<C-\\><C-n>", { desc = "Exit terminal insert mode" })
 
 -- ═══════════════════════════════════════════════════
 -- DAP
