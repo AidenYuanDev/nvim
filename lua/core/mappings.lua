@@ -255,6 +255,34 @@ map("n", "<leader>tc", "<cmd>Countdown<CR>", { desc = "Countdown check remaining
 map("n", "<leader>ts", "<cmd>CountdownStop<CR>", { desc = "Countdown stop" })
 
 -- ═══════════════════════════════════════════════════
+-- Grug Far
+-- ═══════════════════════════════════════════════════
+map("n", "<leader>sr", function()
+	require("grug-far").open()
+end, { desc = "Grug-far search replace" })
+
+map("n", "<leader>sw", function()
+	require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
+end, { desc = "Grug-far search word" })
+
+map({ "n", "x" }, "<leader>ss", function()
+	local search = vim.fn.getreg("/")
+	if search and vim.startswith(search, "\\<") and vim.endswith(search, "\\>") then
+		search = "\\b" .. search:sub(3, -3) .. "\\b"
+	elseif search and vim.startswith(search, "\\V") then
+		search = search:sub(3)
+	end
+	local inst = require("grug-far").open({ prefills = { search = search } })
+	inst:when_ready(function()
+		inst:goto_input("replacement")
+	end)
+end, { desc = "Grug-far search from @/" })
+
+map({ "n", "x" }, "<leader>si", function()
+	require("grug-far").open({ visualSelectionUsage = "auto-detect" })
+end, { desc = "Grug-far search in range" })
+
+-- ═══════════════════════════════════════════════════
 -- Claude Code
 -- ═══════════════════════════════════════════════════
 map("n", "<leader>ac", "<cmd>ClaudeCode<cr>", { desc = "Claude toggle" })
