@@ -4,7 +4,7 @@ return {
 		local nvlsp = require("nvchad.configs.lspconfig")
 		nvlsp.defaults()
 
-		vim.lsp.enable({ "gopls", "yamlls", "pyright", "jsonls", "clangd" })
+		vim.lsp.enable({ "gopls", "yamlls", "pyright", "jsonls", "clangd", "neocmake" })
 
 		vim.lsp.config("gopls", {
 			settings = {
@@ -87,6 +87,10 @@ return {
 			},
 			root_markers = { "compile_commands.json", ".clangd", ".git" },
 			filetypes = { "c", "cpp", "objc", "objcpp" },
+		})
+		vim.lsp.config("neocmake", {
+			cmd = { "neocmakelsp", "--stdio" },
+			root_markers = { "CMakeLists.txt", ".git" },
 		})
 	end,
 }
