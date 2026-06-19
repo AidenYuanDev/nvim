@@ -4,7 +4,7 @@ return {
 		local nvlsp = require("nvchad.configs.lspconfig")
 		nvlsp.defaults()
 
-		vim.lsp.enable({ "gopls", "yamlls", "pyright", "jsonls", "clangd", "neocmake" })
+		vim.lsp.enable({ "gopls", "yamlls", "pyright", "jsonls", "clangd", "neocmake", "vtsls", "cssls", "html" })
 
 		vim.lsp.config("gopls", {
 			settings = {
@@ -41,7 +41,7 @@ return {
 			settings = {
 				json = {
 					validate = { enable = true },
-					format = { enable = false }, -- 交给 conform/prettier
+					format = { enable = false },
 					schemas = ok_js and schemastore.json.schemas() or nil,
 				},
 			},
@@ -91,6 +91,54 @@ return {
 		vim.lsp.config("neocmake", {
 			cmd = { "neocmakelsp", "--stdio" },
 			root_markers = { "CMakeLists.txt", ".git" },
+		})
+
+		vim.lsp.config("vtsls", {
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"javascript.jsx",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+			},
+			settings = {
+				typescript = {
+					inlayHints = {
+						parameterNames = { enabled = "literals" },
+						parameterTypes = { enabled = true },
+						variableTypes = { enabled = true },
+						propertyDeclarationTypes = { enabled = true },
+						functionLikeReturnTypes = { enabled = true },
+						enumMemberValues = { enabled = true },
+					},
+				},
+				javascript = {
+					inlayHints = {
+						parameterNames = { enabled = "literals" },
+						parameterTypes = { enabled = true },
+						variableTypes = { enabled = true },
+						propertyDeclarationTypes = { enabled = true },
+						functionLikeReturnTypes = { enabled = true },
+						enumMemberValues = { enabled = true },
+					},
+				},
+			},
+		})
+
+		vim.lsp.config("cssls", {
+			settings = {
+				css = { validate = true, lint = { unknownAtRules = "ignore" } },
+				scss = { validate = true, lint = { unknownAtRules = "ignore" } },
+				less = { validate = true },
+			},
+		})
+
+		vim.lsp.config("html", {
+			filetypes = { "html", "htmldjango" },
+			init_options = {
+				provideFormatter = false, -- 交给 conform/prettier
+			},
 		})
 	end,
 }
