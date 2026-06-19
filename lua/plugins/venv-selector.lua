@@ -2,7 +2,7 @@ return {
 	"linux-cultist/venv-selector.nvim",
 	dependencies = {
 		"neovim/nvim-lspconfig",
-		{ "nvim-telescope/telescope.nvim", branch = "0.1.x", dependencies = { "nvim-lua/plenary.nvim" } }, -- optional: you can also use fzf-lua, snacks, mini-pick instead.
+		{ "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 	},
 	ft = "python", -- Load when opening Python files
 	keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" } },
