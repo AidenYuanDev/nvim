@@ -137,7 +137,7 @@ return {
 		vim.lsp.config("html", {
 			filetypes = { "html", "htmldjango" },
 			init_options = {
-				provideFormatter = false, -- 交给 conform/prettier
+				provideFormatter = false, -- delegate to conform/prettier
 			},
 		})
 	end,
