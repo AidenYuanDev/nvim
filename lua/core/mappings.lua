@@ -255,6 +255,38 @@ map("n", "<leader>tc", "<cmd>Countdown<CR>", { desc = "Countdown check remaining
 map("n", "<leader>ts", "<cmd>CountdownStop<CR>", { desc = "Countdown stop" })
 
 -- ═══════════════════════════════════════════════════
+-- Comment Translate
+-- ═══════════════════════════════════════════════════
+map("n", "<leader>th", "<cmd>CommentTranslateHover<CR>", { desc = "Translate hover" })
+map("v", "<leader>th", function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
+	local start_pos = vim.api.nvim_buf_get_mark(bufnr, "<")
+	local end_pos = vim.api.nvim_buf_get_mark(bufnr, ">")
+	local start_line, start_col = start_pos[1] - 1, start_pos[2]
+	local end_line, end_col = end_pos[1] - 1, end_pos[2]
+	local end_line_content = vim.api.nvim_buf_get_lines(bufnr, end_line, end_line + 1, false)[1] or ""
+	local end_col_excl = end_col >= #end_line_content and #end_line_content or end_col + 1
+	local lines = vim.api.nvim_buf_get_text(bufnr, start_line, start_col, end_line, end_col_excl, {})
+	local text = table.concat(lines, "\n")
+	if not text or text == "" then
+		vim.notify("No text selected", vim.log.levels.WARN)
+		return
+	end
+	require("comment-translate.translate").translate(text, nil, nil, function(result)
+		if result then
+			require("comment-translate.ui").hover.show(result)
+		else
+			vim.notify("Translation failed", vim.log.levels.ERROR)
+		end
+	end)
+end, { desc = "Translate hover" })
+map("n", "<leader>tH", "<cmd>CommentTranslateHoverToggle<CR>", { desc = "Translate hover toggle" })
+map({ "n", "v" }, "<leader>tr", "<cmd>CommentTranslateReplace<CR>", { desc = "Translate replace" })
+map("n", "<leader>tt", "<cmd>CommentTranslateToggle<CR>", { desc = "Translate toggle immersive" })
+map("n", "<leader>tu", "<cmd>CommentTranslateUpdate<CR>", { desc = "Translate update buffer" })
+
+-- ═══════════════════════════════════════════════════
 -- Grug Far
 -- ═══════════════════════════════════════════════════
 map("n", "<leader>sr", function()
