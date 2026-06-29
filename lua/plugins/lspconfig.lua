@@ -89,7 +89,7 @@ return {
 			filetypes = { "c", "cpp", "objc", "objcpp" },
 		})
 		vim.lsp.config("neocmake", {
-			cmd = { "neocmakelsp", "--stdio" },
+			cmd = { "neocmakelsp", "stdio" },
 			root_markers = { "CMakeLists.txt", ".git" },
 		})
 
