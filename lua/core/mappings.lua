@@ -16,6 +16,12 @@ map("n", "<leader>q", "<cmd>q!<CR>", { desc = "File Quit all" })
 map("i", "jk", "<ESC>", { desc = "Exit terminal insert mode" })
 map("t", "jk", "<C-\\><C-n>", { desc = "Exit terminal insert mode" })
 
+-- Window resize
+map("n", "<C-A-h>", "<cmd>vertical resize -2<CR>", { desc = "Window decrease width" })
+map("n", "<C-A-l>", "<cmd>vertical resize +2<CR>", { desc = "Window increase width" })
+map("n", "<C-A-j>", "<cmd>resize -2<CR>", { desc = "Window decrease height" })
+map("n", "<C-A-k>", "<cmd>resize +2<CR>", { desc = "Window increase height" })
+
 -- ═══════════════════════════════════════════════════
 -- DAP
 -- ═══════════════════════════════════════════════════
