@@ -332,3 +332,57 @@ map("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", { desc = "Claude add buffer" 
 map("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", { desc = "Claude send selection" })
 map("n", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", { desc = "Claude accept diff" })
 map("n", "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", { desc = "Claude deny diff" })
+
+-- ═══════════════════════════════════════════════════
+-- Git
+-- ═══════════════════════════════════════════════════
+
+-- NvChad's telescope git mappings are redundant now that neogit covers both.
+pcall(vim.keymap.del, "n", "<leader>cm")
+pcall(vim.keymap.del, "n", "<leader>gt")
+
+-- ── Neogit: operations ──────────────────────────────
+map("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Git status (neogit)" })
+
+-- ── Gitsigns: blame ─────────────────────────────────
+map("n", "<leader>gi", function()
+	require("gitsigns").toggle_current_line_blame()
+end, { desc = "Git blame inline toggle" })
+
+-- ── Diffview: history and diff ──────────────────────
+map("n", "<leader>gf", "<cmd>DiffviewFileHistory %<CR>", { desc = "Git history current file" })
+map("n", "<leader>gl", "<cmd>.DiffviewFileHistory<CR>", { desc = "Git history current line" })
+map("x", "<leader>gl", ":DiffviewFileHistory<CR>", { desc = "Git history selected lines" })
+map("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", { desc = "Git diff working tree" })
+map("n", "<leader>gq", "<cmd>DiffviewClose<CR>", { desc = "Git diffview close" })
+
+-- Jump from the line under the cursor to the commit that last changed it.
+map("n", "<leader>gh", function()
+	local file = vim.fn.expand("%:p")
+	if file == "" then
+		vim.notify("Buffer has no file", vim.log.levels.WARN)
+		return
+	end
+	local line = vim.api.nvim_win_get_cursor(0)[1]
+	local out = vim.fn.systemlist({
+		"git",
+		"-C",
+		vim.fn.expand("%:p:h"),
+		"blame",
+		"-L",
+		line .. "," .. line,
+		"--porcelain",
+		"--",
+		file,
+	})
+	if vim.v.shell_error ~= 0 or not out[1] then
+		vim.notify("git blame failed", vim.log.levels.ERROR)
+		return
+	end
+	local hash = out[1]:match("^(%x+)")
+	if not hash or hash:match("^0+$") then
+		vim.notify("Line is not committed yet", vim.log.levels.WARN)
+		return
+	end
+	vim.cmd("DiffviewOpen " .. hash .. "^!")
+end, { desc = "Git show commit of current line" })
