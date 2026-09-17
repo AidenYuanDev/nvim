@@ -9,6 +9,9 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	opts = {
+		plugins = {
+			non_standalone = true,
+		},
 		cn = {
 			enabled = true, ---@type boolean
 			translator = true, ---@type boolean

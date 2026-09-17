@@ -386,3 +386,9 @@ map("n", "<leader>gh", function()
 	end
 	vim.cmd("DiffviewOpen " .. hash .. "^!")
 end, { desc = "Git show commit of current line" })
+
+-- ═══════════════════════════════════════════════════
+-- LeetCode
+-- ═══════════════════════════════════════════════════
+
+map("n", "<leader>lc", "<cmd>Leet<CR>", { desc = "Leet enter" })
