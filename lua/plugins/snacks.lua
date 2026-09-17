@@ -4,6 +4,10 @@ return {
 	lazy = false,
 	opts = function()
 		return {
+			-- owns `vim.notify`, noice keeps its own notify view disabled
+			notifier = {
+				enabled = true,
+			},
 			indent = {
 				enabled = true,
 				scope = {

@@ -250,6 +250,13 @@ map({ "i", "n", "s" }, "<c-b>", function()
 end, { silent = true, expr = true, desc = "Noice scroll backward" })
 
 -- ═══════════════════════════════════════════════════
+-- Notifications
+-- ═══════════════════════════════════════════════════
+map("n", "<leader>un", function()
+	require("snacks").notifier.hide()
+end, { desc = "Notification dismiss all" })
+
+-- ═══════════════════════════════════════════════════
 -- Venv Select
 -- ═══════════════════════════════════════════════════
 -- keys = { { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" } },

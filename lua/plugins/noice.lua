@@ -2,16 +2,14 @@ return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
 	dependencies = {
-		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 		"MunifTanjim/nui.nvim",
-		-- OPTIONAL:
-		--   `nvim-notify` is only needed, if you want to use the notification view.
-		--   If not available, we use `mini` as the fallback
-		"rcarriga/nvim-notify",
 	},
 	opts = {
+		-- noice routes `vim.notify` as well, so messages and notifications
+		-- share one pipeline; the `notify` view renders through the
+		-- snacks.notifier backend, so everything looks the same
 		notify = {
-			enabled = false,
+			enabled = true,
 			view = "notify",
 		},
 		lsp = {
