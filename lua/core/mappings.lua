@@ -391,4 +391,31 @@ end, { desc = "Git show commit of current line" })
 -- LeetCode
 -- ═══════════════════════════════════════════════════
 
-map("n", "<leader>lc", "<cmd>Leet<CR>", { desc = "Leet enter" })
+-- ── Session ─────────────────────────────────────────
+map("n", "<leader>le", "<cmd>Leet<CR>", { desc = "Leet enter" })
+map("n", "<leader>lq", "<cmd>Leet exit<CR>", { desc = "Leet exit" })
+
+-- ── Problems ────────────────────────────────────────
+map("n", "<leader>ll", "<cmd>Leet list<CR>", { desc = "Leet problem list" })
+map("n", "<leader>ld", "<cmd>Leet daily<CR>", { desc = "Leet daily question" })
+map("n", "<leader>lR", "<cmd>Leet random<CR>", { desc = "Leet random question" })
+map("n", "<leader>lT", "<cmd>Leet tabs<CR>", { desc = "Leet opened question tabs" })
+
+-- ── Solving ─────────────────────────────────────────
+map("n", "<leader>lt", "<cmd>Leet run<CR>", { desc = "Leet run testcases" })
+map("n", "<leader>ls", "<cmd>Leet submit<CR>", { desc = "Leet submit" })
+map("n", "<leader>lc", "<cmd>Leet console<CR>", { desc = "Leet console" })
+map("n", "<leader>lS", "<cmd>Leet last_submit<CR>", { desc = "Leet load last submission" })
+map("n", "<leader>lr", "<cmd>Leet reset<CR>", { desc = "Leet reset code to default" })
+
+-- ── Description ─────────────────────────────────────
+map("n", "<leader>lD", "<cmd>Leet desc toggle<CR>", { desc = "Leet toggle description" })
+map("n", "<leader>lf", "<cmd>Leet fold<CR>", { desc = "Leet fold description" })
+map("n", "<leader>li", "<cmd>Leet info<CR>", { desc = "Leet question info" })
+map("n", "<leader>lh", "<cmd>Leet hints<CR>", { desc = "Leet hints" })
+map("n", "<leader>lo", "<cmd>Leet open<CR>", { desc = "Leet open in browser" })
+map("n", "<leader>ly", "<cmd>Leet yank<CR>", { desc = "Leet yank code" })
+
+-- ── Config ──────────────────────────────────────────
+map("n", "<leader>lL", "<cmd>Leet lang<CR>", { desc = "Leet change language" })
+map("n", "<leader>lu", "<cmd>Leet cache update<CR>", { desc = "Leet update cache" })
