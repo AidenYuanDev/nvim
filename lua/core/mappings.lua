@@ -51,7 +51,7 @@ map("n", "<F12>", function()
 	require("dap").step_out()
 end, { desc = "Debug step out" })
 
--- ── Session control ─────────────────────────────────
+-- ── Stepping ────────────────────────────────────────
 map("n", "<leader>dc", function()
 	require("dap").continue()
 end, { desc = "Debug continue" })
@@ -76,6 +76,7 @@ map("n", "<leader>dp", function()
 	require("dap").pause()
 end, { desc = "Debug pause" })
 
+-- ── Session control ─────────────────────────────────
 map("n", "<leader>dt", function()
 	require("dap").terminate()
 	require("dapui").close()
@@ -102,15 +103,15 @@ map("n", "<leader>dB", function()
 	require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
 end, { desc = "Debug conditional breakpoint" })
 
-map("n", "<leader>dib", function()
+map("n", "<leader>dL", function()
 	require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
 end, { desc = "Debug log point" })
 
-map("n", "<leader>dxb", function()
+map("n", "<leader>dX", function()
 	require("dap").clear_breakpoints()
 end, { desc = "Debug clear breakpoints" })
 
-map("n", "<leader>dlb", function()
+map("n", "<leader>dQ", function()
 	require("dap").list_breakpoints()
 	vim.cmd("copen")
 end, { desc = "Debug list breakpoints (quickfix)" })
@@ -120,24 +121,52 @@ map("n", "<leader>dE", function()
 end, { desc = "Debug exception breakpoints" })
 
 -- ── Inspect (widgets) ───────────────────────────────
-map("n", "<leader>dls", function()
-	local widgets = require("dap.ui.widgets")
-	widgets.centered_float(widgets.frames)
-end, { desc = "Debug select frame" })
-
-map("n", "<leader>dlv", function()
-	local widgets = require("dap.ui.widgets")
-	widgets.centered_float(widgets.scopes)
-end, { desc = "Debug view scopes" })
-
-map("n", "<leader>dlt", function()
-	local widgets = require("dap.ui.widgets")
-	widgets.centered_float(widgets.threads)
-end, { desc = "Debug select thread" })
-
 map({ "n", "v" }, "<leader>dh", function()
 	require("dap.ui.widgets").hover()
 end, { desc = "Debug hover" })
+
+map("n", "<leader>dwf", function()
+	local widgets = require("dap.ui.widgets")
+	widgets.centered_float(widgets.frames)
+end, { desc = "Debug widget frames" })
+
+map("n", "<leader>dws", function()
+	local widgets = require("dap.ui.widgets")
+	widgets.centered_float(widgets.scopes)
+end, { desc = "Debug widget scopes" })
+
+map("n", "<leader>dwt", function()
+	local widgets = require("dap.ui.widgets")
+	widgets.centered_float(widgets.threads)
+end, { desc = "Debug widget threads" })
+
+map("n", "<leader>dwm", function()
+	local addr = vim.fn.input("Memory address (hex): 0x")
+	if addr and addr ~= "" then
+		local widgets = require("dap.ui.widgets")
+		widgets.centered_float(widgets.expression("*(void**)0x" .. addr))
+	end
+end, { desc = "Debug widget memory" })
+
+map("n", "<leader>dwr", function()
+	require("dapui").float_element("repl", {
+		width = 100,
+		height = 30,
+		enter = true,
+		position = "center",
+		title = "REPL",
+	})
+end, { desc = "Debug window repl" })
+
+map("n", "<leader>dwc", function()
+	require("dapui").float_element("console", {
+		width = 100,
+		height = 25,
+		enter = true,
+		position = "center",
+		title = "Console",
+	})
+end, { desc = "Debug window console" })
 
 -- ── Stack navigation ────────────────────────────────
 map("n", "<leader>df", function()
@@ -147,36 +176,6 @@ end, { desc = "Debug frame up" })
 map("n", "<leader>dF", function()
 	require("dap").down()
 end, { desc = "Debug frame down" })
-
--- ── Memory ──────────────────────────────────────────
-map("n", "<leader>dm", function()
-	local addr = vim.fn.input("Memory address (hex): 0x")
-	if addr and addr ~= "" then
-		local widgets = require("dap.ui.widgets")
-		widgets.centered_float(widgets.expression("*(void**)0x" .. addr))
-	end
-end, { desc = "Debug view memory" })
-
--- ── DAP Float (dapui) ───────────────────────────────
-map("n", "<leader>dlr", function()
-	require("dapui").float_element("repl", {
-		width = 100,
-		height = 30,
-		enter = true,
-		position = "center",
-		title = "REPL",
-	})
-end, { desc = "Debug float repl" })
-
-map("n", "<leader>dlo", function()
-	require("dapui").float_element("console", {
-		width = 100,
-		height = 25,
-		enter = true,
-		position = "center",
-		title = "Console",
-	})
-end, { desc = "Debug float console" })
 
 -- ── DAP UI Toggle ───────────────────────────────────
 map("n", "<leader>du", function()
@@ -217,26 +216,6 @@ map("c", "<S-Enter>", function()
 	require("noice").redirect(vim.fn.getcmdline())
 end, { desc = "Noice redirect cmdline" })
 
-map("n", "<leader>snl", function()
-	require("noice").cmd("last")
-end, { desc = "Noice last message" })
-
-map("n", "<leader>snh", function()
-	require("noice").cmd("history")
-end, { desc = "Noice history" })
-
-map("n", "<leader>sna", function()
-	require("noice").cmd("all")
-end, { desc = "Noice all" })
-
-map("n", "<leader>snd", function()
-	require("noice").cmd("dismiss")
-end, { desc = "Noice dismiss all" })
-
-map("n", "<leader>snt", function()
-	require("noice").cmd("pick")
-end, { desc = "Noice picker" })
-
 map({ "i", "n", "s" }, "<c-f>", function()
 	if not require("noice.lsp").scroll(4) then
 		return "<c-f>"
@@ -252,9 +231,26 @@ end, { silent = true, expr = true, desc = "Noice scroll backward" })
 -- ═══════════════════════════════════════════════════
 -- Notifications
 -- ═══════════════════════════════════════════════════
+-- `:Noice dismiss` clears the notifications rendered by snacks as well
 map("n", "<leader>un", function()
-	require("snacks").notifier.hide()
+	require("noice").cmd("dismiss")
 end, { desc = "Notification dismiss all" })
+
+map("n", "<leader>uh", function()
+	require("noice").cmd("history")
+end, { desc = "Notification history" })
+
+map("n", "<leader>ul", function()
+	require("noice").cmd("last")
+end, { desc = "Notification last message" })
+
+map("n", "<leader>ua", function()
+	require("noice").cmd("all")
+end, { desc = "Notification all messages" })
+
+map("n", "<leader>up", function()
+	require("noice").cmd("pick")
+end, { desc = "Notification picker" })
 
 -- ═══════════════════════════════════════════════════
 -- Venv Select
@@ -264,8 +260,8 @@ end, { desc = "Notification dismiss all" })
 -- ═══════════════════════════════════════════════════
 -- Countdown
 -- ═══════════════════════════════════════════════════
-map("n", "<leader>tc", "<cmd>Countdown<CR>", { desc = "Countdown check remaining" })
-map("n", "<leader>ts", "<cmd>CountdownStop<CR>", { desc = "Countdown stop" })
+map("n", "<leader>cc", "<cmd>Countdown<CR>", { desc = "Countdown check remaining" })
+map("n", "<leader>cs", "<cmd>CountdownStop<CR>", { desc = "Countdown stop" })
 
 -- ═══════════════════════════════════════════════════
 -- Comment Translate
