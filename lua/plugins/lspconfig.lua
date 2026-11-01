@@ -4,8 +4,6 @@ return {
 		local nvlsp = require("nvchad.configs.lspconfig")
 		nvlsp.defaults()
 
-		vim.lsp.enable({ "gopls", "yamlls", "pyright", "jsonls", "clangd", "neocmake", "vtsls", "cssls", "html" })
-
 		vim.lsp.config("gopls", {
 			settings = {
 				gopls = {
@@ -139,6 +137,36 @@ return {
 			init_options = {
 				provideFormatter = false, -- delegate to conform/prettier
 			},
+		})
+
+		vim.lsp.config("pasls", {
+			cmd = { "/usr/local/bin/pasls" },
+			-- without these pasls falls back to /usr/local/share/{fpcsrc,lazsrc} and can't find the RTL
+			cmd_env = {
+				FPCDIR = "/usr/lib/fpc/src",
+				LAZARUSDIR = "/usr/lib/lazarus",
+				PP = "/usr/bin/fpc",
+				FPCTARGET = "linux",
+				FPCTARGETCPU = "x86_64",
+			},
+			init_options = {
+				checkSyntax = true,
+				publishDiagnostics = true,
+			},
+		})
+
+		-- enable last: enable() attaches to already-open buffers immediately, so configs must exist first
+		vim.lsp.enable({
+			"gopls",
+			"yamlls",
+			"pyright",
+			"jsonls",
+			"clangd",
+			"neocmake",
+			"vtsls",
+			"cssls",
+			"html",
+			"pasls",
 		})
 	end,
 }
