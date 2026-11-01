@@ -60,5 +60,45 @@ return {
 				end,
 			},
 		})
+
+		-- Pascal: gdb understands FPC's DWARF and Pascal types better than lldb
+		local dap = require("dap")
+		dap.adapters.gdb = {
+			type = "executable",
+			command = "gdb",
+			args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+		}
+
+		dap.configurations.pascal = {
+			{
+				name = "Launch (select file)",
+				type = "gdb",
+				request = "launch",
+				program = function()
+					return vim.fn.input("Executable: ", vim.fn.getcwd() .. "/", "file")
+				end,
+				cwd = "${workspaceFolder}",
+				stopAtBeginningOfMainSubprogram = false,
+			},
+			{
+				name = "Launch with args",
+				type = "gdb",
+				request = "launch",
+				program = function()
+					return vim.fn.input("Executable: ", vim.fn.getcwd() .. "/", "file")
+				end,
+				args = function()
+					local input = vim.fn.input("Args: ")
+					return vim.split(input, " ", { trimempty = true })
+				end,
+				cwd = "${workspaceFolder}",
+			},
+			{
+				name = "Attach to process",
+				type = "gdb",
+				request = "attach",
+				pid = require("dap.utils").pick_process,
+			},
+		}
 	end,
 }
