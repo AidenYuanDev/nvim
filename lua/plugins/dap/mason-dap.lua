@@ -63,11 +63,14 @@ return {
 
 		-- Pascal: gdb understands FPC's DWARF and Pascal types better than lldb
 		local dap = require("dap")
-		dap.adapters.gdb = {
-			type = "executable",
-			command = "gdb",
-			args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
-		}
+		-- pass the program to gdb so it's loaded before setBreakpoints arrives
+		dap.adapters.gdb = function(callback, config)
+			callback({
+				type = "executable",
+				command = "gdb",
+				args = { "-q", "--interpreter=dap", "--eval-command", "set print pretty on", config.program },
+			})
+		end
 
 		dap.configurations.pascal = {
 			{
