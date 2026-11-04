@@ -14,6 +14,11 @@ M.base46 = {
   -- },
 }
 
+-- noice already auto-shows signature help; NvChad's own trigger calls
+-- vim.lsp.buf.signature_help() again, which noice treats as "focus the popup"
+-- and runs stopinsert
+M.lsp = { signature = false }
+
 -- M.nvdash = { load_on_startup = true }
 -- M.ui = {
 --       tabufline = {
