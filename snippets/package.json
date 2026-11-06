@@ -5,6 +5,10 @@
       {
         "language": "cpp",
         "path": "./cpp.json"
+      },
+      {
+        "language": "pascal",
+        "path": "./pascal.json"
       }
     ]
   }
